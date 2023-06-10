@@ -43,6 +43,11 @@
 
   ;; Check the terminal for output.
   (biff/submit-job (get-context) :echo {:foo "bar"})
-  (deref (biff/submit-job-for-result (get-context) :echo {:foo "bar"})))
+  (deref (biff/submit-job-for-result (get-context) :echo {:foo "bar"}))
+
+  (let [{:keys [biff/db] :as ctx} (get-context)]
+    (q db
+       '{:find (pull msg [*])
+         :where [[msg :msg/text]]})))
 
 
